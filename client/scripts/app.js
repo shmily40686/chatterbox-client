@@ -12,12 +12,22 @@ class App {
             url: this.server,
             type: `POST`,
             data: JSON.stringify(mess),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'text/plain'
+            },
             contentType: `application/json`,
+            dataType: "text",
             success: function(data){
-                console.log('chatterbox: Message sent');
+                      console.log(mess);
+                     $( "#chats" ).append(`<div id=username >${mess.user}</div>
+                    <div id=text>${mess.text}</div>
+                    <div id=${mess.renderRoom}></div>
+                    
+                    `);
             },
             error: function(data){
-                console.error('chatterbox: failed to load message', data);
+                console.error('chatterbox: failed to load message', data, this.data);
             }
 
         })
@@ -28,6 +38,12 @@ class App {
         url: this.server,
         // data: JSON.stringify(data),
         dataType: "text",
+        success: function(data) {
+            console.log('chatterbox messages got', data)
+        },
+        error: function(err) {
+            console.error('ERROR', err);
+        },
         type: 'GET',
         })
     }
@@ -48,7 +64,7 @@ class App {
     // }
 }
 
-var app = new App("http://parse.hrsf92.hackreactor.com/chatterbox/classes/messages");
+var app = new App("http://parse.sfm6.hackreactor.com/chatterbox/classes/messages");
 
-app.fetch()
+// app.fetch()
 
