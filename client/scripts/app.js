@@ -20,7 +20,7 @@ class App {
             dataType: "text",
             success: function(data){
                       console.log(mess);
-                     $( "#chats" ).append(`<div id=username >${mess.user}</div>
+                     $( "#chats" ).append(`<div id=username >${mess.username}</div>
                     <div id=text>${mess.text}</div>
                     <div id=${mess.renderRoom}></div>
                     
@@ -34,37 +34,37 @@ class App {
 
     }
     fetch(){
-        $.ajax({
-        url: this.server,
-        // data: JSON.stringify(data),
-        dataType: "text",
-        success: function(data) {
-            console.log('chatterbox messages got', data)
-        },
-        error: function(err) {
-            console.error('ERROR', err);
-        },
-        type: 'GET',
+        return $.ajax({
+            url: this.server,
+            type: 'GET',
+            contentType: `application/json`,
+            // dataType: "text",
+            success: function(data) {
+                console.log('chatterbox messages got', data)
+                return data;
+            },
+
         })
+     
     }
     clearMessages(){
         $( "#chats" ).empty();
     }
-    renderMessage(str){
-        // $(`<div>${str}</div>`).appendTo(`#chats`)
-        $( "#chats" ).append(`<div>${str}</div>`);
+    renderMessage(mess){
+           $( "#chats" ).append(`<div id="chatbox" class="${mess.roomname}"><div id="username">${mess.username}</div> <div id="text">${mess.text}</div> </div>
+                    `);
     }
     renderRoom(room){
-        $( "#roomSelect" ).append(`<div>${room}</div>`);
+        $( "#roomSelect" ).append(`<option>${room}</option>`);
     }
-    // handleUsernameClick(){
-    //     $('#main').find('.username');
+    handleUsernameClick(){
+        console.log("test");
+         return true;
+        }
+
         
-        
-    // }
 }
 
-var app = new App("http://parse.sfm6.hackreactor.com/chatterbox/classes/messages");
+    var app = new App("http://parse.sfm6.hackreactor.com/chatterbox/classes/messages");
 
-// app.fetch()
 
